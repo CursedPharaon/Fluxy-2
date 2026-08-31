@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>Fluxy 2 — 8-BIT MOBA 3v3</title>
+<link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div id="app">
+  <!-- CRT overlay -->
+  <div id="crt"></div>
+
+  <!-- MAIN MENU -->
+  <div id="screen-menu" class="screen active">
+    <div class="logo-wrap">
+      <h1 class="logo">FLUXY <span>2</span></h1>
+      <p class="subtitle">8-BIT MOBA // 3 vs 3</p>
+      <div class="version">v2.0.0 — RETRO EDITION</div>
+    </div>
+    <nav class="menu-nav">
+      <button class="pixel-btn" data-action="play-offline">▶ ИГРАТЬ (ОФФЛАЙН)</button>
+      <button class="pixel-btn" data-action="play-online">◉ ИГРАТЬ ОНЛАЙН</button>
+      <button class="pixel-btn" data-action="heroes">♟ ГЕРОИ</button>
+      <button class="pixel-btn" data-action="settings">⚙ НАСТРОЙКИ</button>
+      <button class="pixel-btn small" data-action="howto">? КАК ИГРАТЬ</button>
+    </nav>
+    <div class="menu-footer">
+      <span>WASD — движение | МЫШЬ — прицел | ЛКМ/QWE — атака/скиллы</span>
+      <span class="blink">PRESS START</span>
+    </div>
+  </div>
+
+  <!-- HERO SELECT -->
+  <div id="screen-heroes" class="screen">
+    <h2 class="screen-title">ВЫБЕРИ ГЕРОЯ</h2>
+    <div id="hero-grid" class="hero-grid"></div>
+    <div id="hero-detail" class="hero-detail hidden">
+      <div class="hero-preview">
+        <canvas id="hero-preview-canvas" width="96" height="96"></canvas>
+        <div>
+          <h3 id="hd-name">—</h3>
+          <p id="hd-role" class="role"></p>
+          <p id="hd-desc" class="desc"></p>
+          <div id="hd-stats" class="stats-bars"></div>
+        </div>
+      </div>
+      <div class="hero-abilities" id="hd-abilities"></div>
+      <div class="row">
+        <button class="pixel-btn" id="btn-confirm-hero">ВЫБРАТЬ</button>
+        <button class="pixel-btn alt" data-action="back-menu">НАЗАД</button>
+      </div>
+    </div>
+    <div class="row" id="heroes-back-row">
+      <button class="pixel-btn alt" data-action="back-menu">← В МЕНЮ</button>
+      <button class="pixel-btn" id="btn-start-battle" disabled>В БОЙ!</button>
+    </div>
+  </div>
+
+  <!-- ONLINE LOBBY -->
+  <div id="screen-lobby" class="screen">
+    <h2 class="screen-title">ОНЛАЙН ЛОББИ</h2>
+    <div class="lobby-box">
+      <div class="lobby-col">
+        <h3>◆ СИНИЕ</h3>
+        <ul id="team-blue" class="team-list"></ul>
+      </div>
+      <div class="lobby-center">
+        <div id="lobby-status" class="lobby-status">Подключение...</div>
+        <div class="vs">VS</div>
+        <button class="pixel-btn" id="btn-ready">ГОТОВ</button>
+        <button class="pixel-btn alt" data-action="back-menu">ВЫЙТИ</button>
+      </div>
+      <div class="lobby-col">
+        <h3>◆ КРАСНЫЕ</h3>
+        <ul id="team-red" class="team-list"></ul>
+      </div>
+    </div>
+    <div class="lobby-info">
+      <input id="input-name" class="pixel-input" maxlength="12" placeholder="Твой ник">
+      <input id="input-room" class="pixel-input" maxlength="8" placeholder="Комната (ROOM)">
+      <button class="pixel-btn small" id="btn-join-room">ВОЙТИ</button>
+    </div>
+    <p class="hint">Если сервер не запущен — игра автоматически перейдёт в офлайн-режим с ботами.</p>
+  </div>
+
+  <!-- SETTINGS -->
+  <div id="screen-settings" class="screen">
+    <h2 class="screen-title">НАСТРОЙКИ</h2>
+    <div class="settings-box">
+      <label class="setting-row"><span>ЗВУК</span><input type="range" id="set-volume" min="0" max="100" value="60"><span id="vol-val">60%</span></label>
+      <label class="setting-row"><span>ЭФФЕКТ CRT</span><input type="checkbox" id="set-crt" checked></label>
+      <label class="setting-row"><span>ВИБРАЦИЯ</span><input type="checkbox" id="set-vib" checked></label>
+      <label class="setting-row"><span>ПОКАЗЫВАТЬ FPS</span><input type="checkbox" id="set-fps"></label>
+    </div>
+    <button class="pixel-btn alt" data-action="back-menu">НАЗАД</button>
+  </div>
+
+  <!-- HOW TO PLAY -->
+  <div id="screen-howto" class="screen">
+    <h2 class="screen-title">КАК ИГРАТЬ</h2>
+    <div class="howto-box">
+      <p>◆ Цель — уничтожить вражеский НЕКСУС.</p>
+      <p>◆ 3 линии: TOP / MID / BOT. На каждой — 2 башни.</p>
+      <p>◆ Крипы спавнятся каждые 25с и идут по линиям.</p>
+      <p>◆ У каждого героя 3 скилла: <b>Q</b> <b>W</b> <b>E</b> + автоатака <b>ЛКМ/Пробел</b>.</p>
+      <p>◆ Управление: <b>WASD</b> — движение, <b>МЫШЬ</b> — прицел, <b>Shift</b> — рывок.</p>
+      <p>◆ Подбери сферу на карте — получи бафф!</p>
+      <p>◆ Играй 3vs3: с ботами оффлайн или с друзьями онлайн.</p>
+    </div>
+    <button class="pixel-btn alt" data-action="back-menu">ПОНЯТНО</button>
+  </div>
+
+  <!-- GAME SCREEN -->
+  <div id="screen-game" class="screen">
+    <div id="hud">
+      <div class="hud-top">
+        <div class="hud-team blue">
+          <span id="score-blue">0</span> <span class="label">СИНИЕ</span>
+        </div>
+        <div class="hud-center">
+          <div id="game-timer">00:00</div>
+          <div id="game-status">MID LANE</div>
+        </div>
+        <div class="hud-team red">
+          <span class="label">КРАСНЫЕ</span> <span id="score-red">0</span>
+        </div>
+      </div>
+      <div class="hud-bottom">
+        <div class="hud-bars">
+          <div class="bar hp"><div id="bar-hp" class="fill"></div><span id="txt-hp">100/100</span></div>
+          <div class="bar mp"><div id="bar-mp" class="fill"></div><span id="txt-mp">100/100</span></div>
+          <div class="xp-bar"><div id="bar-xp" class="fill"></div><span id="txt-lvl">LVL 1</span></div>
+        </div>
+        <div class="abilities">
+          <div class="abil" data-key="q"><span class="k">Q</span><span class="cd" id="cd-q"></span><p id="ab-q">—</p></div>
+          <div class="abil" data-key="w"><span class="k">W</span><span class="cd" id="cd-w"></span><p id="ab-w">—</p></div>
+          <div class="abil" data-key="e"><span class="k">E</span><span class="cd" id="cd-e"></span><p id="ab-e">—</p></div>
+          <div class="abil" data-key=" "><span class="k">⨂</span><p>АТАКА</p></div>
+        </div>
+        <div class="minimap-wrap">
+          <canvas id="minimap" width="120" height="120"></canvas>
+          <div class="mini-label">MAP</div>
+        </div>
+      </div>
+      <div id="killfeed" class="killfeed"></div>
+      <div id="fps-counter" class="fps hidden">60 FPS</div>
+      <button id="btn-pause" class="pixel-btn small">II ПАУЗА</button>
+    </div>
+    <canvas id="game-canvas"></canvas>
+    <!-- mobile controls -->
+    <div id="mobile-ctrl">
+      <div id="joystick"><div id="stick"></div></div>
+      <div class="m-actions">
+        <button data-m="q">Q</button><button data-m="w">W</button><button data-m="e">E</button><button data-m="atk">⚔</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- RESULT -->
+  <div id="screen-result" class="screen">
+    <h1 id="result-title" class="logo">ПОБЕДА!</h1>
+    <p id="result-desc" class="subtitle"></p>
+    <div id="result-stats" class="result-stats"></div>
+    <div class="row">
+      <button class="pixel-btn" data-action="play-again">ИГРАТЬ СНОВА</button>
+      <button class="pixel-btn alt" data-action="back-menu">В МЕНЮ</button>
+    </div>
+  </div>
+</div>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
