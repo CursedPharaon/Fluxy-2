@@ -1,0 +1,17 @@
+{
+  "name": "fluxy-2",
+  "version": "2.0.0",
+  "description": "Fluxy 2 — 8-бит MOBA 3v3 в стиле ретро. Браузерная игра с онлайном на WebSockets.",
+  "type": "module",
+  "scripts": {
+    "dev": "node server/server.js",
+    "start": "node server/server.js",
+    "serve": "npx serve ."
+  },
+  "dependencies": {
+    "ws": "^8.18.0"
+  },
+  "keywords": ["moba", "8-bit", "pixel", "game", "multiplayer", "fluxy"],
+  "author": "Fluxy Team",
+  "license": "MIT"
+}
