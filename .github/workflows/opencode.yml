@@ -15,7 +15,7 @@ jobs:
         with:
           fetch-depth: 1
           persist-credentials: false
-            - uses: anomalyco/opencode/github@latest
+      - uses: anomalyco/opencode/github@latest
         env:
           OPENCODE_API_KEY: ${{ secrets.OPENCODE_API_KEY }}
         with:
